@@ -1,0 +1,9 @@
+@use "./var" as *;
+
+body {
+    font-family: $font-family!important;
+}
+
+.flex-sm-fill{
+    flex-direction: column-reverse!important;
+}

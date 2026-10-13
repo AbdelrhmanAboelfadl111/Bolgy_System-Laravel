@@ -1,0 +1,21 @@
+@use "components/navBar";
+@use "components/footer";
+@use "components/header";
+@use "components/postBox";
+
+@use "pages/home";
+@use "pages/dashBoard";
+@use "pages/addPost";
+@use "pages/editPost";
+
+@use "abstracts/mixin";
+@use "abstracts/global";
+@use "abstracts/var";
+
+
+@import "/node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "/node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+
+
+
+

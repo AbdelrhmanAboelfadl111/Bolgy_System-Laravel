@@ -1,0 +1,32 @@
+@use "../abstracts/mixin" as *;
+
+.header{
+    .container{
+        @include responsive(350){
+            flex-wrap: wrap;
+        }
+        @include responsive(850){
+            flex-wrap: nowrap;
+        }
+    }
+    ul{
+        list-style: none;
+        padding: 0;
+        @include flexCenter();
+        gap: 10px;
+        a{
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: 1px solid rgb(233, 233, 255);
+            text-decoration: none;
+            &.active{
+                background-color: #CFDDFD;
+            }
+            li{
+
+                color: blue;
+            }
+        }
+    }
+}

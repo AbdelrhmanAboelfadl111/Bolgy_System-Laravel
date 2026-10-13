@@ -1,0 +1,196 @@
+=======================================================================================================================================
+
+    ***** Blade *****
+
+    @foreach ($posts as $post )
+        <div class="col-md-6 column col-lg-4">
+             <x-postBox :post="$post"/> // use It To Send Data From Parent To Child By This DataType
+        </div>
+    @endforeach
+
+    {{ $post->created_at?->format('F j, Y, g:i a') }} // to change formate date that com from dataBase ^^
+
+
+=======================================================================================================================================
+
+    ***** Data Base *****
+
+    DB query Builder : Sql query
+    DataBase
+
+    Eloquent Query Builder: Model
+    Model
+
+    ^
+    Class -> Table
+    Object -> Row
+    Prop -> Columns
+
+=======================================================================================================================================
+
+    ***** Migrations *****
+
+ // +++++++ uniqueTypes +++++++
+    // $table -> id();
+    // $table -> uuid("id"); //unique id With Form asd1a2-adas2d1-asd1sa2d-adas2
+    // $table -> ulid("id"); //unique id With Form sdfasfsa0fsafsa
+
+
+// +++++++ NumbersTypes +++++++
+    // $table -> id();
+    // $table -> uuid("id"); //unique id With Form asd1a2-adas2d1-asd1sa2d-adas2
+    // $table -> integer('views');
+    // $table -> bigInteger('views');
+    // $table -> tinyInteger('views');
+    // $table -> float('views');
+    // $table -> double('views');
+    // $table -> decimal('views');
+    // $table -> boolean('views');
+
+
+// +++++++ StringsTypes +++++++
+    // $table -> string('user_name',255);
+    // $table -> char('name',255);
+    // $table -> text('name'); // descriptions
+    // $table -> mediumText('name');
+    // $table -> longText('name');
+    // $table -> json('name'); // key & value
+
+
+// +++++++ Date & times Types +++++++
+    // $table -> date('name') ; // d-m-y
+    // $table -> time('name'); // h-m-s
+    // $table -> dateTime('name');// d-m-y + h-m-s
+    // $table -> timestamp('name');// d-m-y + h-m-s with timeZone
+    // $table -> timestamps();// created at & updatedAt & No Take Column Name
+    // $table -> softDeletes();// Make Deleted At Column & No Take Column Name
+    // $table -> year("name");// Make year At Column
+
+
+// +++++++ Relations Types +++++++
+    // $table -> foreignId('test_id');//normal bigInt
+    // $table -> foreignId('user_id')->constrained("Put Here Table Name You Want To Get Id From It");//foreignKey Carry UserId From users Table & Value From id Column This Line Write In Another Table (books Table)
+
+
+// +++++++ specialDataTypes +++++++
+    // $table->enum("statues",["pending , Ordered"]);//Chose One Choice
+    // $table->set("statues",["pending , Ordered"]);//Chose You Want Choice in just mysql
+    // $table->ipAddress("ipAddress");//ipAddress For Device
+    // $table->macAddress("MacAddress");//MacAddress For Device
+    // $table->rememberToken();//Send With EmailAndPassword In Login
+
+
+// +++++++ column Modifiers +++++++
+    // $table->string('name')->unique();//unique and indexed
+    // $table->string('nickname')->nullable();
+    // $table->string('role')->default('user');//Take Default Value
+    // $table->integer('orders')->unsigned();//Prevent Minus Numbers
+    // $table->integer('orders')->comment("Your Comment");//Add Comment
+    // $table->integer('orders')->after("table Name");//Add table After TableName
+
+=======================================================================================================================================
+
+    ***** Models *****
+
+    Model :: Table
+    Post  :: posts
+    UserProfile :: user_profiles
+
+    protected $table = "posts"; // custom table name instead dynamic detect
+
+    public $incrementing = false; // when use uuid to Stop AutoIncrement
+    protected $keyType = 'string';
+
+    public $timestamps = false;// stop timestamps
+
+    const CREATED_AT = "DSADS";//ChangeName
+
+    protected $fillable = ["Key1 In DB","Key2 In DB","Key3 In DB"];//Item That Able To Fill Except Items With Default Value
+
+    protected $guarded = [""Key In DB"]// Key Should Has Default Value;
+
+    protected $casts = ["Key1 In DB" => 'boolean'];//Never Edit In Db Just Edit In Response
+
+    protected $hidden = ["Key In DB"];//That Send Data WithOut Key
+
+    protected $attributes = ["Key In DB" => "Default Value"];//That Set Default Value To Key
+
+
+    protected function title():Attribute//It From EloquentCast{
+
+        return Attribute::make(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value),
+        );
+
+    }//get When Front GetData & Set When Front Send Data
+
+
+    public function scopeActive(Builder -> it From Builder Eloquent $query){
+
+        $query->where('is_active',false);
+
+    }/To Make Spec Where We Use It In Controller By 'active()' Name
+
+
+    use SoftDeletes;//to get Row With Column DeletedAt = Null And Fire SoftDelete LoginSoftDelete;
+
+    =======================================================================================================================================
+
+    ***** Controller *****
+
+    $posts = Post::get();//Get All Data And DeletedData Without  use SoftDeletes
+
+    $posts = Post::where('is_active',false)->get();//Get spec Data
+
+    $posts = Post::create([
+            'Key1 In DB' => $request->Key1 In Req,
+            'Key2 In DB' => $request->Key2 Key1 In Req,
+            'Key3 In DB' => $request->Key3 Key1 In Req,
+    ]);//Auto Call Model That Call DB and Fill Items That fillable And That Never Work Without Fillable ^
+
+    $posts = Post::withTrashed()->get();//Get All Data And Trashed Data But Must Use Soft Del In Model
+
+    $posts = Post::onlyTrashed()->get();///Get Deleted Data  But Must Use Soft Del In Model
+
+    public function test(Request $request){
+        $request->validate([
+            'email' =>['nullable' ,'email'],
+            'Title' =>"required",
+            'body' =>"required"
+        ]);
+    }
+
+    $validate = $request->validate([
+            'Language' =>'required|array',
+            'Language.*' =>'string',
+            'Title' =>"required",
+            'body' =>"required"
+        ],[
+            'Title.required' => 'No Title'
+        ]);//To Cast Err Message
+
+    $errors -> all()//use It In Blade To Show Err
+
+    $errors -> any()//use It In Blade to check If Is Error
+
+    @error('Input Name')
+        <p class="alert alert-danger mt-3"> {{ $message }}</p>
+    @enderror //use It In Blade  To LooP In Err By Wep
+
+    old('Input Name') //use It In Blade To Get Old Valu
+
+    @checked(in_array('Js',old('Language',[]))) //use It In Blade In Check Box That Return Arr To Get Old Data
+
+    $request->file('avatar');//To Catch File Such As Image
+
+    $file ->store('uploaded','public');//To Store In Storage -> App -> Public -> uploaded
+
+
+=======================================================================================================================================
+
+    ***** Form *****
+
+    @csrf//Hidden Input Has Valu To Confirm That You Send Request
+
+    @method('method Name')//Use It When You Want to Use Method Without Get & Post But Out In Form Method 'POST'

@@ -1,0 +1,23 @@
+@use "../abstracts/mixin" as *;
+.main{
+    .container{
+        .row{
+            .column{
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
+.paginationSection{
+    nav{
+        ul{
+            li{
+                a{
+                    &:focus{
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+    }
+}

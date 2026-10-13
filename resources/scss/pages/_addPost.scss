@@ -1,0 +1,39 @@
+@use "../abstracts/mixin" as *;
+// body.addPost{
+//     background-color: #f6f7fa;
+// }
+
+// .header.addPost{
+//     border: 0px;
+// }
+
+.main{
+    .container{
+        @include flexCenter();
+        form{
+            width: 800px;
+            @include responsive(350){
+                width: 100%;
+            }
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #d1d4fab8;
+            @include flexCenter();
+            flex-direction: column;
+            gap: 15px;
+            .dashed{
+                border: 1px dashed #d1d4fab8;
+            }
+            div{
+                width: 100%;
+                label{
+                    font-size: 18px;
+                }
+                textarea{
+                    resize: none;
+                }
+            }
+        }
+    }
+}
