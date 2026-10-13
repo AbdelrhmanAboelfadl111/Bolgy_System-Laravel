@@ -85,12 +85,20 @@
 
     <section class="main py-5">
         <div class="container">
+
             <div class="row">
-                    @foreach ($posts as $post)
+                @forelse ($posts as $post)
                     <div class="column col-12">
-                        <x-postBox :post="$post" :inDashBoard="$inDashBoard" />
+                        <x-postBox
+                            :post="$post"
+                            :inDashBoard="$inDashBoard"
+                        />
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-12 text-center">
+                       <img class="empty" src="{{ Vite::asset('resources/images/empty.png') }}" alt="">
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>
