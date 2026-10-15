@@ -25,9 +25,41 @@ class PostController extends Controller
         $inDashBoard = true;
 
         $validate = $request->validate([
-            'Title' =>'required|string',
-            'author_name' =>'required|string',
-            'description' =>"required|string",
+                'Title' => [
+                    'required',
+                    'string',
+                    'min:3',
+                    'max:150',
+                ],
+
+                'author_name' => [
+                    'required',
+                    'string',
+                    'min:3',
+                    'max:100',
+                ],
+
+                'description' => [
+                    'required',
+                    'string',
+                    'min:10',
+                    'max:5000',
+                ],
+            ], [
+                'Title.required' => 'Post title is required.',
+                'Title.string' => 'Post title must be text.',
+                'Title.min' => 'Post title must contain at least 3 characters.',
+                'Title.max' => 'Post title cannot exceed 150 characters.',
+
+                'author_name.required' => 'Author name is required.',
+                'author_name.string' => 'Author name must be text.',
+                'author_name.min' => 'Author name must contain at least 3 characters.',
+                'author_name.max' => 'Author name cannot exceed 100 characters.',
+
+                'description.required' => 'Post description is required.',
+                'description.string' => 'Post description must be text.',
+                'description.min' => 'Post description must contain at least 10 characters.',
+                'description.max' => 'Post description cannot exceed 5000 characters.',
         ]);
 
         $posts = Post::create([
@@ -74,9 +106,41 @@ class PostController extends Controller
 
 
         $validate = $request->validate([
-            'Title' =>'required|string',
-            'author_name' =>'required|string',
-            'description' =>"required|string",
+                'Title' => [
+                    'required',
+                    'string',
+                    'min:3',
+                    'max:150',
+                ],
+
+                'author_name' => [
+                    'required',
+                    'string',
+                    'min:3',
+                    'max:100',
+                ],
+
+                'description' => [
+                    'required',
+                    'string',
+                    'min:10',
+                    'max:5000',
+                ],
+            ], [
+                'Title.required' => 'Post title is required.',
+                'Title.string' => 'Post title must be text.',
+                'Title.min' => 'Post title must contain at least 3 characters.',
+                'Title.max' => 'Post title cannot exceed 150 characters.',
+
+                'author_name.required' => 'Author name is required.',
+                'author_name.string' => 'Author name must be text.',
+                'author_name.min' => 'Author name must contain at least 3 characters.',
+                'author_name.max' => 'Author name cannot exceed 100 characters.',
+
+                'description.required' => 'Post description is required.',
+                'description.string' => 'Post description must be text.',
+                'description.min' => 'Post description must contain at least 10 characters.',
+                'description.max' => 'Post description cannot exceed 5000 characters.',
         ]);
 
         $post->update([

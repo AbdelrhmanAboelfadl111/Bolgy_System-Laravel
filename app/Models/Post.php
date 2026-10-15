@@ -13,7 +13,8 @@ class Post extends Model
 
     protected $fillable = ["title", "author_name", "body"];
 
-    protected $appends = ['formatted_created_at'];
+    protected $appends = ['formatted_created_at','full_body','author_name_initials'];
+
 
     protected function formattedCreatedAt(): Attribute
     {
@@ -33,6 +34,16 @@ class Post extends Model
     {
         return Attribute::get(
             fn () => $this->getRawOriginal('body')
+        );
+    }
+
+    protected function authorNameInitials(): Attribute
+    {
+        return Attribute::get(
+            fn () => collect(explode(' ', $this->author_name))
+                ->filter()
+                ->map(fn ($word) => strtoupper(substr($word, 0, 1)))
+                ->implode('')
         );
     }
 }
